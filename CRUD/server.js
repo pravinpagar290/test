@@ -62,15 +62,15 @@ app.get("/students", async (req, res) => {
 });
 
 
-app.put("/update-student/:id", async (req, res) => {
+app.put("/update-student/:name", async (req, res) => {
     try {
-        const { id } = req.params;
-        const { name, roll_no } = req.body;
 
-        const updatedStudent = await studentModel.findByIdAndUpdate(
-            id,
+        const { name } = req.params;
+        const { roll_no } = req.body;
+
+        const updatedStudent = await studentModel.findOneAndUpdate(
+            { name: name },
             {
-                name,
                 roll_no
             },
             {
@@ -90,11 +90,13 @@ app.put("/update-student/:id", async (req, res) => {
         });
 
     } catch (error) {
+
         console.log("Error updating student", error);
 
         res.status(500).json({
             message: "Error updating student"
         });
+
     }
 });
 
