@@ -101,11 +101,11 @@ app.put("/update-student/:name", async (req, res) => {
 });
 
 
-app.delete("/delete-student/:id", async (req, res) => {
+app.delete("/delete-student/:name", async (req, res) => {
     try {
-        const { id } = req.params;
+        const { name } = req.params;
 
-        const student = await studentModel.findByIdAndDelete(id);
+        const student = await studentModel.findOneAndDelete({ name: name });
 
         if (!student) {
             return res.status(404).json({
